@@ -7,7 +7,7 @@ const Layout = () => {
     <div>
       <div className="header">
         <div className="logo">
-          <p>subMerge</p>
+          <h1>subMerge</h1>
         </div>
         <div className="navigationLinks">
           <Link className="homeLink" to="/">

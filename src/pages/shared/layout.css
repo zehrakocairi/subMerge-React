@@ -9,6 +9,10 @@
   font-size: xx-large;
   color: white;
 }
+.logo h1 {
+  font-weight: 700;
+  padding: 10px;
+}
 .navigationLinks {
   display: flex;
   align-items: center;

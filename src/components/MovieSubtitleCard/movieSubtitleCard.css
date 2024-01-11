@@ -1,0 +1,27 @@
+.subtitle-card {
+  text-align: left;
+  width: 92%;
+}
+.movie-title {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: left;
+  width: 70%;
+}
+.search-word {
+  width: 30%;
+}
+.card-head {
+  display: flex;
+}
+.card-btns-wrapper {
+  display: flex;
+}
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  width: 8%;
+}
+.button-group button {
+  margin: 5px;
+}
