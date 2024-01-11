@@ -1,0 +1,27 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #4146be;
+}
+.logo {
+  margin-left: 100px;
+  font-weight: 900;
+  font-size: xx-large;
+  color: white;
+}
+.navigationLinks {
+  display: flex;
+  align-items: center;
+  margin-right: 50px;
+}
+
+.navigationLinks a {
+  color: white;
+}
+.navigationLinks .homeLink {
+  margin-right: 20px;
+}
+
+.navigationLinks .moviesLink {
+  margin-right: 20px;
+}
