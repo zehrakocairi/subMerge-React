@@ -1,0 +1,20 @@
+.creation-container div {
+  margin: auto;
+}
+.creation-title {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.search-input {
+  width: 70%;
+  padding: 50px;
+}
+
+.creation-options {
+  display: flex;
+  width: 30%;
+}
+.creation-options select {
+  margin: 7px;
+}

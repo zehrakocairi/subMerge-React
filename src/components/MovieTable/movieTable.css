@@ -1,0 +1,12 @@
+.table-container {
+  width: 70%;
+  margin: auto;
+  padding: 100px;
+}
+.movie-details-btn {
+  margin-right: 5px;
+  padding: 7px;
+}
+.movie-delete-btn {
+  padding: 7px;
+}
