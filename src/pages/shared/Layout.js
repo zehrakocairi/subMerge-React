@@ -16,12 +16,11 @@ const Layout = () => {
           <Link className="moviesLink" to="/movies">
             Movies
           </Link>
-          <Link className="movieSubtitleLink" to="/movie/:3">
-            Movie Subtitle
+          <Link className="whiteBoardLink" to="/whiteBoard">
+            White board
           </Link>
         </div>
       </div>
-
       <div>
         <Outlet />
       </div>

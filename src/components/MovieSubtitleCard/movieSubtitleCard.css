@@ -1,27 +1,33 @@
 .subtitle-card {
   text-align: left;
-  width: 92%;
+  width: 88%;
 }
-.movie-title {
-  font-size: 30px;
-  font-weight: bold;
-  text-align: left;
-  width: 70%;
-}
-.search-word {
-  width: 30%;
-}
-.card-head {
-  display: flex;
+.subtitle-card-body div {
+  height: 30px;
 }
 .card-btns-wrapper {
   display: flex;
+  margin: 20px;
 }
 .button-group {
   display: flex;
   flex-wrap: wrap;
-  width: 8%;
+  width: 12%;
 }
-.button-group button {
+.delete-subtitle {
   margin: 5px;
+  padding: 3px;
+}
+.show-both {
+  margin: 5px;
+  padding: 3px;
+}
+.show-one {
+  margin: 5px;
+  padding: 3px;
+}
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }

@@ -1,53 +1,24 @@
-import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import "./movieTable.css";
+import { Link } from "react-router-dom";
 
-const MovieTable = () => {
+const MovieTable = ({ movie }) => {
   return (
-    <div className="table-container">
-      <Table striped bordered hover variant="light">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Movie Name</th>
-            <th>Description</th>
-            <th>Chose what you want</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>
-              <Button variant="link">Titanic</Button>
-            </td>
-            <td>Here comes description</td>
-            <td>
-              <Button className="movie-details-btn" variant="primary">
-                Details
-              </Button>
-              <Button className="movie-delete-btn" variant="danger">
-                Delete
-              </Button>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>
-              <Button variant="link">Friends</Button>
-            </td>
-            <td>Here comes description</td>
-            <td>
-              <Button className="movie-details-btn" variant="primary">
-                Details
-              </Button>
-              <Button className="movie-delete-btn" variant="danger">
-                Delete
-              </Button>
-            </td>
-          </tr>
-        </tbody>
-      </Table>
-    </div>
+    <tr className="table-container">
+      <td>1</td>
+      <td>
+        <Button variant="link">{movie.name}</Button>
+      </td>
+      <td>Here comes description</td>
+      <td>
+        <Button className="movie-details-btn" variant="primary">
+          <Link to={{ pathname: `/movie/${movie.id}`, search: `movieName=${movie.name}` }}> Details</Link>
+        </Button>
+        <Button className="movie-delete-btn" variant="danger">
+          Delete
+        </Button>
+      </td>
+    </tr>
   );
 };
 

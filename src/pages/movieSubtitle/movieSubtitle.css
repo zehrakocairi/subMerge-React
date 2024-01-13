@@ -1,5 +1,16 @@
 .card-container {
-  width: 70%;
+  width: 67%;
   margin: auto;
   padding: 100px;
+}
+.movie-title {
+  margin-left: 20px;
+  font-weight: 600;
+}
+.search-word {
+  width: 27%;
+}
+.card-head {
+  display: flex;
+  justify-content: space-between;
 }
