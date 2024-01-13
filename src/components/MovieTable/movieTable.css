@@ -10,3 +10,7 @@
 .movie-delete-btn {
   padding: 7px;
 }
+.movie-details-btn a {
+  color: white;
+  text-decoration: none;
+}
