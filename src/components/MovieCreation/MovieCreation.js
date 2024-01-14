@@ -2,15 +2,34 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import "./movieCreation.css";
+import { useState } from "react";
 
 const MovieCreation = () => {
+  const [movieName, setMovieName] = useState("");
+
+  async function GetNewMovie() {
+    try {
+      const response = await fetch(`http://localhost:3001/files/search?movieName=${movieName}`);
+      console.log(response);
+      setMovieName("");
+    } catch (error) {
+      console.error("Error fetching new movie:", error);
+    }
+  }
+
   return (
     <div className="creation-container">
       <div className="creation-title">STUDY WITH SUBMERGE</div>
       <div className="search-input">
         <InputGroup size="lg">
-          <Form.Control placeholder="Search movie" aria-label="Search movie" aria-describedby="basic-addon2" />
-          <Button variant="outline-secondary" id="button-addon2">
+          <Form.Control
+            placeholder="Search movie"
+            aria-label="Search movie"
+            aria-describedby="basic-addon2"
+            onChange={(e) => setMovieName(e.target.value)}
+            value={movieName}
+          />
+          <Button variant="outline-secondary" id="button-addon2" onClick={GetNewMovie}>
             Search
           </Button>
         </InputGroup>

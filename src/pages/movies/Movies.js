@@ -4,7 +4,19 @@ import MovieTable from "../../components/MovieTable/MovieTable";
 import useFetch from "../../hooks/useFetch";
 
 const Movies = () => {
-  const [movies, , setMovies] = useFetch("http://localhost:3001/files", []);
+  const [movies, setMovies, ,] = useFetch("http://localhost:3001/files", []);
+
+  async function deleteMovie(movieId) {
+    try {
+      const response = await fetch(`http://localhost:3001/files/${movieId}`, {
+        method: "DELETE",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    setMovies(movies.filter((movie) => movie.id !== movieId));
+  }
 
   return (
     <div>
@@ -20,7 +32,7 @@ const Movies = () => {
           </thead>
           <tbody>
             {movies.map((movie) => {
-              return <MovieTable key={movie.id} movie={movie} />;
+              return <MovieTable key={movie.id} movie={movie} deleteMovie={deleteMovie} />;
             })}
           </tbody>
         </Table>

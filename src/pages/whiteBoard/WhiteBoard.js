@@ -1,5 +1,5 @@
 import "./whiteBoard.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ApplicationContext } from "../../contexts/ApplicationContext";
 import MovieSubtitleCard from "../../components/MovieSubtitleCard/MovieSubtitleCard";
 

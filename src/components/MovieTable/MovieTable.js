@@ -2,7 +2,7 @@ import Button from "react-bootstrap/Button";
 import "./movieTable.css";
 import { Link } from "react-router-dom";
 
-const MovieTable = ({ movie }) => {
+const MovieTable = ({ movie, deleteMovie }) => {
   return (
     <tr className="table-container">
       <td>1</td>
@@ -14,7 +14,7 @@ const MovieTable = ({ movie }) => {
         <Button className="movie-details-btn" variant="primary">
           <Link to={{ pathname: `/movie/${movie.id}`, search: `movieName=${movie.name}` }}> Details</Link>
         </Button>
-        <Button className="movie-delete-btn" variant="danger">
+        <Button className="movie-delete-btn" variant="danger" onClick={() => deleteMovie(movie.id)}>
           Delete
         </Button>
       </td>

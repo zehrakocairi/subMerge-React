@@ -1,17 +1,16 @@
 import Card from "react-bootstrap/Card";
-import { useState } from "react";
-import Button from "react-bootstrap/Button";
 import "./movieSubtitleCard.css";
 import { FaStar, FaBookReader } from "react-icons/fa";
 import { useContext } from "react";
 import { ApplicationContext } from "../../contexts/ApplicationContext";
+import { LiaEyeSolid } from "react-icons/lia";
+import { LiaEyeSlashSolid } from "react-icons/lia";
+import { MdDelete } from "react-icons/md";
 
-const MovieSubtitleCard = ({ movieSubtitle }) => {
-  const [showOne, setShowOne] = useState(false);
-  const [changeText, setChangeText] = useState(false);
-  const { whiteBoardSubtitles, setWhiteBoardSubtitles } = useContext(ApplicationContext);
+const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle }) => {
+  const { whiteBoardSubtitles, setWhiteBoardSubtitles, showOne, setShowOne, changeText, setChangeText } = useContext(ApplicationContext);
 
-  function handleClick(movieSubtitle, event) {
+  function setToWhiteBoard(movieSubtitle, event) {
     event.preventDefault();
 
     const isWhiteBoard = whiteBoardSubtitles.some((subtitle) => {
@@ -24,20 +23,46 @@ const MovieSubtitleCard = ({ movieSubtitle }) => {
       setWhiteBoardSubtitles((prevSubtitles) => prevSubtitles.filter((prevSubtitle) => prevSubtitle.id !== movieSubtitle.id));
     }
   }
+  async function setToBookmark(movieSubtitle, event) {
+    event.preventDefault();
+
+    const isBookmarked = movieSubtitle.bookmarked;
+    try {
+      const response = await fetch(`http://localhost:3001/files/${movieSubtitle.documentId}/records/${movieSubtitle.id}/bookmark`, {
+        method: isBookmarked ? "DELETE" : "POST",
+      });
+      if (response.status === 200) {
+        movieSubtitle.bookmarked = !isBookmarked;
+      }
+      throw new Error("Something went wrong on api server!");
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <div className="card-btns-wrapper">
       <div className="icon-wrapper">
-        <a href="">
-          <FaStar />
-        </a>
-        <a href="">
-          <FaBookReader
-            onClick={(event) => {
-              handleClick(movieSubtitle, event);
-            }}
-          />
-        </a>
+        <div>
+          <a href="#">
+            <FaStar
+              style={{ color: "da1717" }}
+              onClick={async (event) => {
+                await setToBookmark(movieSubtitle, event);
+              }}
+            />
+          </a>
+        </div>
+        <div>
+          <a href="">
+            <FaBookReader
+              style={{ color: "da1717" }}
+              onClick={(event) => {
+                setToWhiteBoard(movieSubtitle, event);
+              }}
+            />
+          </a>
+        </div>
       </div>
 
       <Card className="subtitle-card">
@@ -64,28 +89,30 @@ const MovieSubtitleCard = ({ movieSubtitle }) => {
         )}
       </Card>
       <div className="button-group">
-        <Button className="delete-subtitle" variant="danger">
-          delete
-        </Button>
-        <Button
-          className="show-both"
-          variant="primary"
+        <div
+          onClick={() => {
+            removeSubtitle(movieSubtitle.id);
+          }}
+        >
+          <MdDelete size={24} style={{ color: "da1717" }} />
+        </div>
+        <div
           onClick={() => {
             setShowOne(false);
           }}
         >
-          see both
-        </Button>
-        <Button
-          className="show-one"
-          variant="primary"
+          <LiaEyeSolid size={20} />
+          <LiaEyeSolid size={20} />
+        </div>
+        <div
           onClick={() => {
             setShowOne(true);
             setChangeText(!changeText);
           }}
         >
-          see one
-        </Button>
+          <LiaEyeSolid size={20} />
+          <LiaEyeSlashSolid size={20} />
+        </div>
       </div>
     </div>
   );

@@ -19,6 +19,9 @@ const Layout = () => {
           <Link className="whiteBoardLink" to="/whiteBoard">
             White board
           </Link>
+          <Link className="bookMark" to="/bookMark">
+            Book mark
+          </Link>
         </div>
       </div>
       <div>
