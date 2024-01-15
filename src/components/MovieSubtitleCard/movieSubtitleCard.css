@@ -3,7 +3,7 @@
   width: 88%;
 }
 .subtitle-card-body div {
-  height: 30px;
+  min-height: 30px;
 }
 .card-btns-wrapper {
   display: flex;

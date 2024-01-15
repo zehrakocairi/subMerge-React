@@ -13,6 +13,7 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = tr
   const { whiteBoardSubtitles, setWhiteBoardSubtitles, showOne, setShowOne, changeText, setChangeText } = useContext(ApplicationContext);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isWhiteBoard, setIsWhiteBoard] = useState(false);
+  const [chatGptReply, setChatGptReply] = useState("");
 
   useEffect(() => {
     setIsBookmarked(movieSubtitle.bookmarked);
@@ -55,6 +56,58 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = tr
       <strong>{text}</strong>
     </Tooltip>
   );
+
+  async function handleMouseUp() {
+    const sentence = await GetSentence(window.getSelection().toString());
+    setChatGptReply(sentence);
+  }
+
+  async function GetSentence(word) {
+    const apiUrl = "https://api.openai.com/v1/chat/completions";
+
+    const requestBody = {
+      model: "gpt-4",
+      messages: [
+        {
+          role: "system",
+          content: `I want to see different usage of words while studying English. I will give you some words and you will create me at least 3 sentences with those words all together.
+           For example:
+            I'll provide:
+            "look for"
+            You would create at least 3 sentences in the following format:
+            <p> I'm looking for my book I lost</p>
+        `,
+        },
+        {
+          role: "user",
+          content: JSON.stringify(word),
+        },
+      ],
+      temperature: 1,
+      max_tokens: 50,
+      top_p: 1,
+      frequency_penalty: 0,
+      presence_penalty: 0,
+    };
+    const apiKey = "";
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify(requestBody),
+    };
+
+    try {
+      const response = await fetch(apiUrl, requestOptions);
+      const data = await response.json();
+      return data.choices[0].message.content;
+    } catch (err) {
+      alert(`Error happened while fetching story. ${err}`);
+    }
+  }
 
   return (
     <div className="card-btns-wrapper">
@@ -115,28 +168,36 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = tr
         </div>
       </div>
 
-      <Card className="subtitle-card">
-        {showOne ? (
-          changeText ? (
-            <Card.Body className="subtitle-card-body">
+      <Card className="subtitle-card" onMouseUp={handleMouseUp}>
+        <Card.Body className="subtitle-card-body">
+          {showOne ? (
+            changeText ? (
+              <>
+                <div>{movieSubtitle.text1}</div>
+                <hr />
+                <div></div>
+              </>
+            ) : (
+              <>
+                <div></div>
+                <hr />
+                <div>{movieSubtitle.text2}</div>
+              </>
+            )
+          ) : (
+            <>
               <div>{movieSubtitle.text1}</div>
               <hr />
-              <div></div>
-            </Card.Body>
-          ) : (
-            <Card.Body className="subtitle-card-body">
-              <div></div>
-              <hr />
               <div>{movieSubtitle.text2}</div>
-            </Card.Body>
-          )
-        ) : (
-          <Card.Body className="subtitle-card-body">
-            <div>{movieSubtitle.text1}</div>
-            <hr />
-            <div>{movieSubtitle.text2}</div>
-          </Card.Body>
-        )}
+            </>
+          )}
+          {chatGptReply && (
+            <>
+              <hr />
+              <div dangerouslySetInnerHTML={{ __html: chatGptReply }}></div>
+            </>
+          )}
+        </Card.Body>
       </Card>
       <div className="button-group">
         {isDeleteEnabled && (
