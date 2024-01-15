@@ -1,4 +1,4 @@
-import "./movieSubtitle.css";
+import "./MovieSubtitle.css";
 import MovieSubtitleCard from "../../components/MovieSubtitleCard/MovieSubtitleCard";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -28,9 +28,12 @@ const MovieSubtitle = () => {
 
   function removeSubtitle(movieSubtitleId) {
     try {
-      fetch(`http://localhost:3001/files/${movieSubtitleId}`, {
+      fetch(`http://localhost:3001/files/${movieId}/records/${movieSubtitleId}`, {
         method: "DELETE",
       });
+      if (!movieSubtitles) {
+        throw new Error("Network error!");
+      }
       setFilteredData((prevMovieSubtitles) => prevMovieSubtitles.filter((prevMovieSubtitle) => prevMovieSubtitle.id !== movieSubtitleId));
     } catch (error) {
       console.log(error);

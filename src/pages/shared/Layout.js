@@ -1,4 +1,4 @@
-import "./layout.css";
+import "./Layout.css";
 import { Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -7,7 +7,9 @@ const Layout = () => {
     <div>
       <div className="header">
         <div className="logo">
-          <h1>subMerge</h1>
+          <Link className="homeLink" to="/">
+            <h1>subMerge</h1>
+          </Link>
         </div>
         <div className="navigationLinks">
           <Link className="homeLink" to="/">
@@ -19,8 +21,8 @@ const Layout = () => {
           <Link className="whiteBoardLink" to="/whiteBoard">
             White board
           </Link>
-          <Link className="bookMark" to="/bookMark">
-            Book mark
+          <Link className="bookmark" to="/bookmark">
+            Book marks
           </Link>
         </div>
       </div>

@@ -9,9 +9,13 @@
   font-size: xx-large;
   color: white;
 }
+.logo a {
+  text-decoration: none;
+}
 .logo h1 {
   font-weight: 700;
   padding: 10px;
+  color: white;
 }
 .navigationLinks {
   display: flex;

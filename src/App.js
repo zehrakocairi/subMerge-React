@@ -6,7 +6,7 @@ import Movies from "./pages/movies/Movies.js";
 import MovieSubtitle from "./pages/movieSubtitle/MovieSubtitle.js";
 import ApplicationProvider from "./contexts/ApplicationContext.js";
 import WhiteBoard from "./pages/whiteBoard/WhiteBoard.js";
-import BookMark from "./pages/bookMark/BookMark.js";
+import Bookmark from "./pages/bookmark/Bookmark.js";
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
               <Route path="/movies" element={<Movies />} />
               <Route path="/movie/:movieId" element={<MovieSubtitle />} />
               <Route path="/whiteBoard" element={<WhiteBoard />} />
-              <Route path="/bookMark" element={<BookMark />} />
+              <Route path="/bookmark" element={<Bookmark />} />
             </Route>
           </Routes>
         </BrowserRouter>

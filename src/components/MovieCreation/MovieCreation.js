@@ -1,16 +1,18 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import "./movieCreation.css";
+import "./MovieCreation.css";
 import { useState } from "react";
 
 const MovieCreation = () => {
   const [movieName, setMovieName] = useState("");
 
-  async function GetNewMovie() {
+  async function ProcessNewMovie() {
     try {
       const response = await fetch(`http://localhost:3001/files/search?movieName=${movieName}`);
-      console.log(response);
+      if (!response.ok) {
+        throw new Error("Network error!");
+      }
       setMovieName("");
     } catch (error) {
       console.error("Error fetching new movie:", error);
@@ -29,7 +31,7 @@ const MovieCreation = () => {
             onChange={(e) => setMovieName(e.target.value)}
             value={movieName}
           />
-          <Button variant="outline-secondary" id="button-addon2" onClick={GetNewMovie}>
+          <Button variant="outline-secondary" id="button-addon2" onClick={ProcessNewMovie}>
             Search
           </Button>
         </InputGroup>

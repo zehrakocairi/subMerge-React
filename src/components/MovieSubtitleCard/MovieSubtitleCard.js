@@ -1,21 +1,31 @@
 import Card from "react-bootstrap/Card";
-import "./movieSubtitleCard.css";
-import { FaStar, FaBookReader } from "react-icons/fa";
-import { useContext } from "react";
+import "./MovieSubtitleCard.css";
+import { FaBookmark, FaRegBookmark, FaStar, FaRegStar } from "react-icons/fa";
+import { useContext, useEffect, useState } from "react";
 import { ApplicationContext } from "../../contexts/ApplicationContext";
-import { LiaEyeSolid } from "react-icons/lia";
-import { LiaEyeSlashSolid } from "react-icons/lia";
 import { MdDelete } from "react-icons/md";
+import { HiOutlineEmojiHappy } from "react-icons/hi";
+import { FaRegFaceSmileWink } from "react-icons/fa6";
 
-const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle }) => {
+const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = true }) => {
   const { whiteBoardSubtitles, setWhiteBoardSubtitles, showOne, setShowOne, changeText, setChangeText } = useContext(ApplicationContext);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isWhiteBoard, setIsWhiteBoard] = useState(false);
+
+  useEffect(() => {
+    setIsBookmarked(movieSubtitle.bookmarked);
+  }, []);
+
+  useEffect(() => {
+    setIsWhiteBoard(
+      whiteBoardSubtitles.some((subtitle) => {
+        return subtitle.id === movieSubtitle.id;
+      })
+    );
+  }, [whiteBoardSubtitles]);
 
   function setToWhiteBoard(movieSubtitle, event) {
     event.preventDefault();
-
-    const isWhiteBoard = whiteBoardSubtitles.some((subtitle) => {
-      return subtitle.id === movieSubtitle.id;
-    });
 
     if (!isWhiteBoard) {
       setWhiteBoardSubtitles((prevSubtitles) => [...prevSubtitles, movieSubtitle]);
@@ -26,13 +36,12 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle }) => {
   async function setToBookmark(movieSubtitle, event) {
     event.preventDefault();
 
-    const isBookmarked = movieSubtitle.bookmarked;
     try {
       const response = await fetch(`http://localhost:3001/files/${movieSubtitle.documentId}/records/${movieSubtitle.id}/bookmark`, {
         method: isBookmarked ? "DELETE" : "POST",
       });
       if (response.status === 200) {
-        movieSubtitle.bookmarked = !isBookmarked;
+        setIsBookmarked(!isBookmarked);
       }
       throw new Error("Something went wrong on api server!");
     } catch (error) {
@@ -45,22 +54,44 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle }) => {
       <div className="icon-wrapper">
         <div>
           <a href="#">
-            <FaStar
-              style={{ color: "da1717" }}
-              onClick={async (event) => {
-                await setToBookmark(movieSubtitle, event);
-              }}
-            />
+            {isBookmarked ? (
+              <FaBookmark
+                style={{ color: "#4146BE" }}
+                onClick={async (event) => {
+                  await setToBookmark(movieSubtitle, event);
+                }}
+                size={20}
+              />
+            ) : (
+              <FaRegBookmark
+                style={{ color: "#4146BE" }}
+                onClick={async (event) => {
+                  await setToBookmark(movieSubtitle, event);
+                }}
+                size={20}
+              />
+            )}
           </a>
         </div>
         <div>
           <a href="">
-            <FaBookReader
-              style={{ color: "da1717" }}
-              onClick={(event) => {
-                setToWhiteBoard(movieSubtitle, event);
-              }}
-            />
+            {isWhiteBoard ? (
+              <FaStar
+                style={{ color: "#4146BE" }}
+                onClick={(event) => {
+                  setToWhiteBoard(movieSubtitle, event);
+                }}
+                size={25}
+              />
+            ) : (
+              <FaRegStar
+                style={{ color: "#4146BE" }}
+                onClick={(event) => {
+                  setToWhiteBoard(movieSubtitle, event);
+                }}
+                size={25}
+              />
+            )}
           </a>
         </div>
       </div>
@@ -89,20 +120,21 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle }) => {
         )}
       </Card>
       <div className="button-group">
-        <div
-          onClick={() => {
-            removeSubtitle(movieSubtitle.id);
-          }}
-        >
-          <MdDelete size={24} style={{ color: "da1717" }} />
-        </div>
+        {isDeleteEnabled && (
+          <div
+            onClick={() => {
+              removeSubtitle(movieSubtitle.id);
+            }}
+          >
+            <MdDelete size={25} style={{ color: "#4146BE" }} />
+          </div>
+        )}
         <div
           onClick={() => {
             setShowOne(false);
           }}
         >
-          <LiaEyeSolid size={20} />
-          <LiaEyeSolid size={20} />
+          <HiOutlineEmojiHappy size={25} color="#F6C630" />
         </div>
         <div
           onClick={() => {
@@ -110,8 +142,7 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle }) => {
             setChangeText(!changeText);
           }}
         >
-          <LiaEyeSolid size={20} />
-          <LiaEyeSlashSolid size={20} />
+          <FaRegFaceSmileWink size={21} color="#F6C630" />
         </div>
       </div>
     </div>

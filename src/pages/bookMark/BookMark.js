@@ -11,12 +11,12 @@ function BookMark() {
       setData(responseJson);
     }
     getBookMarkedSubtitles();
-  });
+  }, []);
 
   return (
     <div>
       {data.map((movieSubtitle) => {
-        return <MovieSubtitleCard key={movieSubtitle.id} movieSubtitle={movieSubtitle} />;
+        return <MovieSubtitleCard key={movieSubtitle.id} movieSubtitle={movieSubtitle} isDeleteEnabled={false} />;
       })}
     </div>
   );
