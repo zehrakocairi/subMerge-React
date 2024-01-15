@@ -6,6 +6,8 @@ import { ApplicationContext } from "../../contexts/ApplicationContext";
 import { MdDelete } from "react-icons/md";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
 import { FaRegFaceSmileWink } from "react-icons/fa6";
+import { OverlayTrigger } from "react-bootstrap";
+import { Tooltip } from "react-bootstrap";
 
 const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = true }) => {
   const { whiteBoardSubtitles, setWhiteBoardSubtitles, showOne, setShowOne, changeText, setChangeText } = useContext(ApplicationContext);
@@ -14,7 +16,7 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = tr
 
   useEffect(() => {
     setIsBookmarked(movieSubtitle.bookmarked);
-  }, []);
+  }, [movieSubtitle.bookmarked]);
 
   useEffect(() => {
     setIsWhiteBoard(
@@ -22,7 +24,7 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = tr
         return subtitle.id === movieSubtitle.id;
       })
     );
-  }, [whiteBoardSubtitles]);
+  }, [whiteBoardSubtitles, movieSubtitle.id]);
 
   function setToWhiteBoard(movieSubtitle, event) {
     event.preventDefault();
@@ -48,51 +50,68 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = tr
       console.log(error);
     }
   }
+  const generateTooltipElement = (text) => (
+    <Tooltip id="tooltip">
+      <strong>{text}</strong>
+    </Tooltip>
+  );
 
   return (
     <div className="card-btns-wrapper">
       <div className="icon-wrapper">
         <div>
-          <a href="#">
-            {isBookmarked ? (
-              <FaBookmark
-                style={{ color: "#4146BE" }}
-                onClick={async (event) => {
-                  await setToBookmark(movieSubtitle, event);
-                }}
-                size={20}
-              />
-            ) : (
-              <FaRegBookmark
-                style={{ color: "#4146BE" }}
-                onClick={async (event) => {
-                  await setToBookmark(movieSubtitle, event);
-                }}
-                size={20}
-              />
-            )}
-          </a>
+          {isBookmarked ? (
+            <div
+              onClick={async (event) => {
+                await setToBookmark(movieSubtitle, event);
+              }}
+            >
+              <OverlayTrigger placement="left" overlay={generateTooltipElement("remove from bookmark")}>
+                <a href="#">
+                  <FaBookmark size={21} color="#4146BE" />
+                </a>
+              </OverlayTrigger>
+            </div>
+          ) : (
+            <div
+              onClick={async (event) => {
+                await setToBookmark(movieSubtitle, event);
+              }}
+            >
+              <OverlayTrigger placement="left" overlay={generateTooltipElement("add to bookmark")}>
+                <a href="#">
+                  <FaRegBookmark size={21} color="#4146BE" />
+                </a>
+              </OverlayTrigger>
+            </div>
+          )}
         </div>
         <div>
-          <a href="">
-            {isWhiteBoard ? (
-              <FaStar
-                style={{ color: "#4146BE" }}
-                onClick={(event) => {
-                  setToWhiteBoard(movieSubtitle, event);
-                }}
-                size={25}
-              />
-            ) : (
-              <FaRegStar
-                style={{ color: "#4146BE" }}
-                onClick={(event) => {
-                  setToWhiteBoard(movieSubtitle, event);
-                }}
-                size={25}
-              />
-            )}
-          </a>
+          {isWhiteBoard ? (
+            <div
+              onClick={async (event) => {
+                await setToWhiteBoard(movieSubtitle, event);
+              }}
+            >
+              <OverlayTrigger placement="left" overlay={generateTooltipElement("remove from the white board")}>
+                <a href="#">
+                  <FaStar size={25} color="rgb(198 215 112)" />
+                </a>
+              </OverlayTrigger>
+            </div>
+          ) : (
+            <div
+              onClick={async (event) => {
+                await setToWhiteBoard(movieSubtitle, event);
+              }}
+            >
+              <OverlayTrigger placement="left" overlay={generateTooltipElement("add to the white board")}>
+                <a href="#">
+                  <FaRegStar size={25} color="rgb(198 215 112)" />
+                </a>
+              </OverlayTrigger>
+            </div>
+          )}
         </div>
       </div>
 
@@ -126,7 +145,11 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = tr
               removeSubtitle(movieSubtitle.id);
             }}
           >
-            <MdDelete size={25} style={{ color: "#4146BE" }} />
+            <OverlayTrigger placement="right" overlay={generateTooltipElement("Delete subtitle")}>
+              <a href="#">
+                <MdDelete size={25} style={{ color: "#4146BE" }} />
+              </a>
+            </OverlayTrigger>
           </div>
         )}
         <div
@@ -134,7 +157,11 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = tr
             setShowOne(false);
           }}
         >
-          <HiOutlineEmojiHappy size={25} color="#F6C630" />
+          <OverlayTrigger placement="right" overlay={generateTooltipElement("See Both")}>
+            <a href="#">
+              <HiOutlineEmojiHappy size={25} color="#F6C630" />
+            </a>
+          </OverlayTrigger>
         </div>
         <div
           onClick={() => {
@@ -142,7 +169,11 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = tr
             setChangeText(!changeText);
           }}
         >
-          <FaRegFaceSmileWink size={21} color="#F6C630" />
+          <OverlayTrigger placement="right" overlay={generateTooltipElement("See One")}>
+            <a href="#">
+              <FaRegFaceSmileWink size={21} color="#F6C630" />
+            </a>
+          </OverlayTrigger>
         </div>
       </div>
     </div>
