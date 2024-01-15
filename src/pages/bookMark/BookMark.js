@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import MovieSubtitleCard from "../../components/MovieSubtitleCard/MovieSubtitleCard";
 
-function BookMark() {
+function Bookmark() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -22,4 +22,4 @@ function BookMark() {
   );
 }
 
-export default BookMark;
+export default Bookmark;
