@@ -9,9 +9,13 @@
   font-size: xx-large;
   color: white;
 }
+.logo a {
+  text-decoration: none;
+}
 .logo h1 {
   font-weight: 700;
   padding: 10px;
+  color: white;
 }
 .navigationLinks {
   display: flex;
@@ -21,11 +25,5 @@
 
 .navigationLinks a {
   color: white;
-}
-.navigationLinks .homeLink {
-  margin-right: 20px;
-}
-
-.navigationLinks .moviesLink {
-  margin-right: 20px;
+  margin-right: 15px;
 }

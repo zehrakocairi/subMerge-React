@@ -1,5 +1,5 @@
-import "./whiteBoard.css";
-import { useContext } from "react";
+import "./WhiteBoard.css";
+import { useContext, useState, useRef } from "react";
 import { ApplicationContext } from "../../contexts/ApplicationContext";
 import MovieSubtitleCard from "../../components/MovieSubtitleCard/MovieSubtitleCard";
 
@@ -9,7 +9,7 @@ function WhiteBoard() {
   return (
     <div>
       {whiteBoardSubtitles.map((whiteBoardSubtitle) => {
-        return <MovieSubtitleCard key={whiteBoardSubtitle.id} movieSubtitle={whiteBoardSubtitle} />;
+        return <MovieSubtitleCard key={whiteBoardSubtitle.id} movieSubtitle={whiteBoardSubtitle} isDeleteEnabled={false} />;
       })}
     </div>
   );

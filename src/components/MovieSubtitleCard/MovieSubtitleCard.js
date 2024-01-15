@@ -1,22 +1,31 @@
 import Card from "react-bootstrap/Card";
-import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import "./movieSubtitleCard.css";
-import { FaStar, FaBookReader } from "react-icons/fa";
-import { useContext } from "react";
+import "./MovieSubtitleCard.css";
+import { FaBookmark, FaRegBookmark, FaStar, FaRegStar } from "react-icons/fa";
+import { useContext, useEffect, useState } from "react";
 import { ApplicationContext } from "../../contexts/ApplicationContext";
+import { MdDelete } from "react-icons/md";
+import { HiOutlineEmojiHappy } from "react-icons/hi";
+import { FaRegFaceSmileWink } from "react-icons/fa6";
 
-const MovieSubtitleCard = ({ movieSubtitle }) => {
-  const [showOne, setShowOne] = useState(false);
-  const [changeText, setChangeText] = useState(false);
-  const { whiteBoardSubtitles, setWhiteBoardSubtitles } = useContext(ApplicationContext);
+const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = true }) => {
+  const { whiteBoardSubtitles, setWhiteBoardSubtitles, showOne, setShowOne, changeText, setChangeText } = useContext(ApplicationContext);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isWhiteBoard, setIsWhiteBoard] = useState(false);
 
-  function handleClick(movieSubtitle, event) {
+  useEffect(() => {
+    setIsBookmarked(movieSubtitle.bookmarked);
+  }, []);
+
+  useEffect(() => {
+    setIsWhiteBoard(
+      whiteBoardSubtitles.some((subtitle) => {
+        return subtitle.id === movieSubtitle.id;
+      })
+    );
+  }, [whiteBoardSubtitles]);
+
+  function setToWhiteBoard(movieSubtitle, event) {
     event.preventDefault();
-
-    const isWhiteBoard = whiteBoardSubtitles.some((subtitle) => {
-      return subtitle.id === movieSubtitle.id;
-    });
 
     if (!isWhiteBoard) {
       setWhiteBoardSubtitles((prevSubtitles) => [...prevSubtitles, movieSubtitle]);
@@ -24,20 +33,67 @@ const MovieSubtitleCard = ({ movieSubtitle }) => {
       setWhiteBoardSubtitles((prevSubtitles) => prevSubtitles.filter((prevSubtitle) => prevSubtitle.id !== movieSubtitle.id));
     }
   }
+  async function setToBookmark(movieSubtitle, event) {
+    event.preventDefault();
+
+    try {
+      const response = await fetch(`http://localhost:3001/files/${movieSubtitle.documentId}/records/${movieSubtitle.id}/bookmark`, {
+        method: isBookmarked ? "DELETE" : "POST",
+      });
+      if (response.status === 200) {
+        setIsBookmarked(!isBookmarked);
+      }
+      throw new Error("Something went wrong on api server!");
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <div className="card-btns-wrapper">
       <div className="icon-wrapper">
-        <a href="">
-          <FaStar />
-        </a>
-        <a href="">
-          <FaBookReader
-            onClick={(event) => {
-              handleClick(movieSubtitle, event);
-            }}
-          />
-        </a>
+        <div>
+          <a href="#">
+            {isBookmarked ? (
+              <FaBookmark
+                style={{ color: "#4146BE" }}
+                onClick={async (event) => {
+                  await setToBookmark(movieSubtitle, event);
+                }}
+                size={20}
+              />
+            ) : (
+              <FaRegBookmark
+                style={{ color: "#4146BE" }}
+                onClick={async (event) => {
+                  await setToBookmark(movieSubtitle, event);
+                }}
+                size={20}
+              />
+            )}
+          </a>
+        </div>
+        <div>
+          <a href="">
+            {isWhiteBoard ? (
+              <FaStar
+                style={{ color: "#4146BE" }}
+                onClick={(event) => {
+                  setToWhiteBoard(movieSubtitle, event);
+                }}
+                size={25}
+              />
+            ) : (
+              <FaRegStar
+                style={{ color: "#4146BE" }}
+                onClick={(event) => {
+                  setToWhiteBoard(movieSubtitle, event);
+                }}
+                size={25}
+              />
+            )}
+          </a>
+        </div>
       </div>
 
       <Card className="subtitle-card">
@@ -64,28 +120,30 @@ const MovieSubtitleCard = ({ movieSubtitle }) => {
         )}
       </Card>
       <div className="button-group">
-        <Button className="delete-subtitle" variant="danger">
-          delete
-        </Button>
-        <Button
-          className="show-both"
-          variant="primary"
+        {isDeleteEnabled && (
+          <div
+            onClick={() => {
+              removeSubtitle(movieSubtitle.id);
+            }}
+          >
+            <MdDelete size={25} style={{ color: "#4146BE" }} />
+          </div>
+        )}
+        <div
           onClick={() => {
             setShowOne(false);
           }}
         >
-          see both
-        </Button>
-        <Button
-          className="show-one"
-          variant="primary"
+          <HiOutlineEmojiHappy size={25} color="#F6C630" />
+        </div>
+        <div
           onClick={() => {
             setShowOne(true);
             setChangeText(!changeText);
           }}
         >
-          see one
-        </Button>
+          <FaRegFaceSmileWink size={21} color="#F6C630" />
+        </div>
       </div>
     </div>
   );

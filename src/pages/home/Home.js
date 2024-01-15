@@ -1,4 +1,4 @@
-import "./home.css";
+import "./Home.css";
 import MovieCreation from "../../components/MovieCreation/MovieCreation";
 
 const Home = () => {

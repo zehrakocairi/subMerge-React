@@ -1,10 +1,25 @@
-import "./movies.css";
+import "./Movies.css";
 import Table from "react-bootstrap/Table";
 import MovieTable from "../../components/MovieTable/MovieTable";
 import useFetch from "../../hooks/useFetch";
 
 const Movies = () => {
-  const [movies, , setMovies] = useFetch("http://localhost:3001/files", []);
+  const [movies, setMovies, ,] = useFetch("http://localhost:3001/files", []);
+
+  async function handleDeleteMovie(movieId) {
+    try {
+      const response = await fetch(`http://localhost:3001/files/${movieId}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error("Network error!");
+      }
+    } catch (error) {
+      console.log("Error occured while deleting movie : " + error);
+    }
+
+    setMovies(movies.filter((movie) => movie.id !== movieId));
+  }
 
   return (
     <div>
@@ -19,8 +34,8 @@ const Movies = () => {
             </tr>
           </thead>
           <tbody>
-            {movies.map((movie) => {
-              return <MovieTable key={movie.id} movie={movie} />;
+            {movies.map((movie, i) => {
+              return <MovieTable key={movie.id} index={i + 1} movie={movie} deleteMovie={handleDeleteMovie} />;
             })}
           </tbody>
         </Table>
