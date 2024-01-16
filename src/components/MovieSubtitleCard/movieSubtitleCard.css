@@ -1,13 +1,15 @@
 .subtitle-card {
   text-align: left;
   width: 88%;
+  box-shadow: 0px 0px 0px 0px rgb(0 0 0 / 31%), 0 6px 20px 0 rgb(42 96 177 / 20%);
+  border: none;
 }
 .subtitle-card-body div {
   min-height: 30px;
 }
 .card-btns-wrapper {
   display: flex;
-  margin: 20px;
+  margin: 30px;
   width: 100%;
 }
 .button-group div {
@@ -29,4 +31,26 @@
 
 .icon-wrapper div {
   margin: 35px 7px 35px 0px;
+}
+
+.openAIsentences {
+  border: 1px solid #10a37f;
+  border-radius: 0px 40px 0px 10px;
+  padding: 25px;
+}
+.openAILogo {
+  position: absolute;
+  background-color: #10a37f;
+  border-radius: 50%;
+  color: white;
+  padding: 5px;
+  right: 14px;
+  top: 14px;
+}
+
+.spinner {
+  color: #10a37f;
+  text-align: center;
+  display: block;
+  margin: auto;
 }

@@ -2,6 +2,7 @@ import "./Movies.css";
 import Table from "react-bootstrap/Table";
 import MovieTable from "../../components/MovieTable/MovieTable";
 import useFetch from "../../hooks/useFetch";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 const Movies = () => {
   const [movies, setMovies, ,] = useFetch("http://localhost:3001/files", []);
@@ -23,14 +24,15 @@ const Movies = () => {
 
   return (
     <div>
+      <PageTitle title="Movies" />
       <div className="table-container">
-        <Table striped bordered hover variant="light">
+        <Table striped hover variant="light">
           <thead>
             <tr>
               <th>#</th>
               <th>Movie Name</th>
               <th>Description</th>
-              <th>Chose what you want</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>

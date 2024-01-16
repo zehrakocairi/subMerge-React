@@ -8,7 +8,7 @@ const Layout = () => {
       <div className="header">
         <div className="logo">
           <Link className="homeLink" to="/">
-            <h1>subMerge</h1>
+            <h1>SubMerge</h1>
           </Link>
         </div>
         <div className="navigationLinks">
@@ -19,10 +19,10 @@ const Layout = () => {
             Movies
           </Link>
           <Link className="whiteBoardLink" to="/whiteBoard">
-            White board
+            White Board
           </Link>
           <Link className="bookmark" to="/bookmark">
-            Book marks
+            Bookmarks
           </Link>
         </div>
       </div>

@@ -8,12 +8,15 @@ import { HiOutlineEmojiHappy } from "react-icons/hi";
 import { FaRegFaceSmileWink } from "react-icons/fa6";
 import { OverlayTrigger } from "react-bootstrap";
 import { Tooltip } from "react-bootstrap";
+import { SiOpenai } from "react-icons/si";
+import Spinner from "react-bootstrap/Spinner";
 
 const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = true }) => {
   const { whiteBoardSubtitles, setWhiteBoardSubtitles, showOne, setShowOne, changeText, setChangeText } = useContext(ApplicationContext);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isWhiteBoard, setIsWhiteBoard] = useState(false);
   const [chatGptReply, setChatGptReply] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsBookmarked(movieSubtitle.bookmarked);
@@ -63,6 +66,7 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = tr
   }
 
   async function GetSentence(word) {
+    setIsLoading(true);
     const apiUrl = "https://api.openai.com/v1/chat/completions";
 
     const requestBody = {
@@ -89,7 +93,7 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = tr
       frequency_penalty: 0,
       presence_penalty: 0,
     };
-    const apiKey = "";
+    const apiKey = "*********";
 
     const requestOptions = {
       method: "POST",
@@ -103,9 +107,15 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = tr
     try {
       const response = await fetch(apiUrl, requestOptions);
       const data = await response.json();
-      return data.choices[0].message.content;
+      let tempContent = data.choices[0].message.content;
+      if (word) {
+        tempContent = tempContent.toLowerCase().replaceAll(word.toLowerCase(), `<b style="color: #10a37f">${word}</b>`);
+      }
+      return tempContent;
     } catch (err) {
       alert(`Error happened while fetching story. ${err}`);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -148,7 +158,7 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = tr
             >
               <OverlayTrigger placement="left" overlay={generateTooltipElement("remove from the white board")}>
                 <a href="#">
-                  <FaStar size={25} color="rgb(198 215 112)" />
+                  <FaStar size={25} color="#10a37f" />
                 </a>
               </OverlayTrigger>
             </div>
@@ -160,7 +170,7 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = tr
             >
               <OverlayTrigger placement="left" overlay={generateTooltipElement("add to the white board")}>
                 <a href="#">
-                  <FaRegStar size={25} color="rgb(198 215 112)" />
+                  <FaRegStar size={25} color="#10a37f" />
                 </a>
               </OverlayTrigger>
             </div>
@@ -191,48 +201,56 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = tr
               <div>{movieSubtitle.text2}</div>
             </>
           )}
-          {chatGptReply && (
+          {chatGptReply ? (
             <>
               <hr />
-              <div dangerouslySetInnerHTML={{ __html: chatGptReply }}></div>
+              <div style={{ position: "relative" }}>
+                <SiOpenai className="openAILogo" size="30px" />
+                <div dangerouslySetInnerHTML={{ __html: chatGptReply }} className="openAIsentences" />
+              </div>
             </>
+          ) : (
+            isLoading && <Spinner className="spinner" animation="grow" />
           )}
         </Card.Body>
       </Card>
       <div className="button-group">
         {isDeleteEnabled && (
           <div
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
               removeSubtitle(movieSubtitle.id);
             }}
           >
             <OverlayTrigger placement="right" overlay={generateTooltipElement("Delete subtitle")}>
               <a href="#">
-                <MdDelete size={25} style={{ color: "#4146BE" }} />
+                <MdDelete size={25} style={{ color: "#c5167a" }} />
               </a>
             </OverlayTrigger>
           </div>
         )}
         <div
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
             setShowOne(false);
           }}
         >
           <OverlayTrigger placement="right" overlay={generateTooltipElement("See Both")}>
             <a href="#">
-              <HiOutlineEmojiHappy size={25} color="#F6C630" />
+              <HiOutlineEmojiHappy size={25} color="#10a37f" />
             </a>
           </OverlayTrigger>
         </div>
         <div
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
             setShowOne(true);
             setChangeText(!changeText);
           }}
         >
           <OverlayTrigger placement="right" overlay={generateTooltipElement("See One")}>
             <a href="#">
-              <FaRegFaceSmileWink size={21} color="#F6C630" />
+              <FaRegFaceSmileWink size={21} color="#10a37f" />
             </a>
           </OverlayTrigger>
         </div>

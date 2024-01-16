@@ -3,7 +3,10 @@
 }
 .creation-title {
   font-size: 40px;
-  font-weight: 700;
+  color: #4146be;
+  font-family: "Caprasimo", serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .search-input {

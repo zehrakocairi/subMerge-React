@@ -16,6 +16,9 @@
   font-weight: 700;
   padding: 10px;
   color: white;
+  font-family: "Caprasimo", serif;
+  font-weight: 400;
+  font-style: normal;
 }
 .navigationLinks {
   display: flex;
@@ -25,5 +28,12 @@
 
 .navigationLinks a {
   color: white;
-  margin-right: 15px;
+  margin-right: 20px;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.navigationLinks a:hover {
+  font-size: 18px;
+  cursor: pointer;
 }

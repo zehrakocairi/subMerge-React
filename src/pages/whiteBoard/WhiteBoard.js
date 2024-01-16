@@ -1,17 +1,21 @@
 import "./WhiteBoard.css";
-import { useContext, useState, useRef } from "react";
+import { useContext } from "react";
 import { ApplicationContext } from "../../contexts/ApplicationContext";
 import MovieSubtitleCard from "../../components/MovieSubtitleCard/MovieSubtitleCard";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 function WhiteBoard() {
   const { whiteBoardSubtitles } = useContext(ApplicationContext);
 
   return (
-    <div>
-      {whiteBoardSubtitles.map((whiteBoardSubtitle) => {
-        return <MovieSubtitleCard key={whiteBoardSubtitle.id} movieSubtitle={whiteBoardSubtitle} isDeleteEnabled={false} />;
-      })}
-    </div>
+    <>
+      <PageTitle title="White Board"></PageTitle>
+      <div className="whiteBoardWrapper">
+        {whiteBoardSubtitles.map((whiteBoardSubtitle) => {
+          return <MovieSubtitleCard key={whiteBoardSubtitle.id} movieSubtitle={whiteBoardSubtitle} isDeleteEnabled={false} />;
+        })}
+      </div>
+    </>
   );
 }
 
