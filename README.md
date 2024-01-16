@@ -21,7 +21,7 @@ This project is designed to assist individuals in learning a new language using 
 
 - **Styling and Responsive Design:** The project includes visually appealing styling and ensures a responsive design for a seamless experience across different devices.
 
-- **A new page called Favorites to list and interact with all favorited subtitles.**
+- **A new page called Favorites to list and interact with all favorited subtitles.
 
 - **Homepage to create a new movie entry:** This page is to call back end to find subtitles for both languages and persist them in the data storage.
 
