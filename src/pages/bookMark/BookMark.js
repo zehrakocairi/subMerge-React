@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import MovieSubtitleCard from "../../components/MovieSubtitleCard/MovieSubtitleCard";
+import "./Bookmark.css";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 function Bookmark() {
   const [data, setData] = useState([]);
@@ -14,11 +16,14 @@ function Bookmark() {
   }, []);
 
   return (
-    <div>
-      {data.map((movieSubtitle) => {
-        return <MovieSubtitleCard key={movieSubtitle.id} movieSubtitle={movieSubtitle} isDeleteEnabled={false} />;
-      })}
-    </div>
+    <>
+      <PageTitle title="Bookmarks"></PageTitle>
+      <div className="bookmarkWrapper">
+        {data.map((movieSubtitle) => {
+          return <MovieSubtitleCard key={movieSubtitle.id} movieSubtitle={movieSubtitle} isDeleteEnabled={false} />;
+        })}
+      </div>
+    </>
   );
 }
 

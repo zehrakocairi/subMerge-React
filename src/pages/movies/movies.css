@@ -1,3 +1,22 @@
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  --bs-table-color-type: #44576a;
+  --bs-table-bg-type: #f4f7fb;
+}
+.table > :not(caption) > * > * {
+  padding: 0.8rem 1rem;
+  color: #44576a;
+  background-color: #ffffff;
+  vertical-align: middle;
+}
+
 .movie-details-btn {
   margin-right: 5px !important;
+}
+a,
+button,
+.btn-link {
+  text-decoration: none;
+  text-decoration-line: none;
+  color: inherit;
+  cursor: pointer;
 }

@@ -4,13 +4,46 @@
   padding: 100px;
 }
 .movie-title {
-  margin-left: 40px;
+  margin-left: 10px;
   font-weight: 600;
+  color: #44576a;
 }
 .search-word {
-  width: 27%;
+  width: 30%;
+  box-shadow: 0px 0px 0px 0px rgb(0 0 0 / 31%), 0 6px 20px 0 rgb(42 96 177 / 20%);
+}
+.search-word input {
+  padding: 10px;
 }
 .card-head {
   display: flex;
   justify-content: space-between;
+  border-left: 6px solid #10a37f;
+  align-items: center;
+  border-radius: 6px;
+  margin-left: 55px;
+}
+.openAI-description {
+  position: absolute;
+  right: 40px;
+  top: 100px;
+  border: none;
+  box-shadow: 0px 0px 0px 0px rgb(0 0 0 / 31%), 0 6px 20px 0 rgb(34 38 36 / 14%);
+}
+
+.openAI-description .card-header {
+  background-color: #10a37f;
+  border: none;
+}
+
+.openAI-description .card-body {
+  background-color: #e6f3f3;
+  color: #585f7a;
+  border: none;
+}
+.card-title h5 {
+  font-size: 1.1rem;
+}
+.card-text {
+  font-size: 0.9rem;
 }

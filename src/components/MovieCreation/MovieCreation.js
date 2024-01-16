@@ -14,6 +14,7 @@ const MovieCreation = () => {
         throw new Error("Network error!");
       }
       setMovieName("");
+      alert(await response.text());
     } catch (error) {
       console.error("Error fetching new movie:", error);
     }
