@@ -28,7 +28,7 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = tr
         return subtitle.id === movieSubtitle.id;
       })
     );
-  }, [whiteBoardSubtitles, movieSubtitle.id]);
+  }, [whiteBoardSubtitles]);
 
   function setToWhiteBoard(movieSubtitle, event) {
     event.preventDefault();
@@ -79,7 +79,7 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = tr
             I'll provide:
             "look for"
             You would create at least 3 sentences in the following format:
-            <p> I'm looking for my book I lost</p>
+            <p> I'm looking for my book I've lost</p>
         `,
         },
         {
@@ -177,7 +177,6 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = tr
           )}
         </div>
       </div>
-
       <Card className="subtitle-card" onMouseUp={handleMouseUp}>
         <Card.Body className="subtitle-card-body">
           {showOne ? (

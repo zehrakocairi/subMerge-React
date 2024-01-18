@@ -26,14 +26,14 @@ const MovieCreation = () => {
       <div className="search-input">
         <InputGroup size="lg">
           <Form.Control
-            placeholder="Search movie"
-            aria-label="Search movie"
+            placeholder="Write a movie name"
+            aria-label="Write a movie name"
             aria-describedby="basic-addon2"
             onChange={(e) => setMovieName(e.target.value)}
             value={movieName}
           />
           <Button variant="outline-secondary" id="button-addon2" onClick={ProcessNewMovie}>
-            Search
+            Create
           </Button>
         </InputGroup>
       </div>
