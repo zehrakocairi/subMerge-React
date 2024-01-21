@@ -8,7 +8,7 @@ function Bookmark() {
 
   useEffect(() => {
     async function getBookMarkedSubtitles() {
-      const response = await fetch(`http://localhost:3001/bookmarks`);
+      const response = await fetch(`https://kodilist.azure-api.net/submerge/Bookmark/1`);
       const responseJson = await response.json();
       setData(responseJson);
     }

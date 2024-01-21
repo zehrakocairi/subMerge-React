@@ -9,12 +9,13 @@ const MovieCreation = () => {
 
   async function ProcessNewMovie() {
     try {
-      const response = await fetch(`http://localhost:3001/files/search?movieName=${movieName}`);
+      const response = await fetch(`https://kodilist.azure-api.net/submerge/fetchsubtitles?movieName=${movieName}`);
       if (!response.ok) {
         throw new Error("Network error!");
       }
       setMovieName("");
-      alert(await response.text());
+      const { message } = await response.json();
+      alert(message);
     } catch (error) {
       console.error("Error fetching new movie:", error);
     }

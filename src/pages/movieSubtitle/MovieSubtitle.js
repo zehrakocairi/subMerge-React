@@ -12,7 +12,7 @@ const MovieSubtitle = () => {
   const { movieId } = useParams();
   const searchParams = new URLSearchParams(useLocation().search);
   const name = searchParams.get("movieName");
-  const [movieSubtitles, , ,] = useFetch(`http://localhost:3001/files/${movieId}/records`, []);
+  const [movieSubtitles, , ,] = useFetch(`https://kodilist.azure-api.net/submerge/File/${movieId}/Record`, []);
   let [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {

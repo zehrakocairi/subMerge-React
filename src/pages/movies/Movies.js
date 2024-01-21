@@ -5,7 +5,7 @@ import useFetch from "../../hooks/useFetch";
 import PageTitle from "../../components/PageTitle/PageTitle";
 
 const Movies = () => {
-  const [movies, setMovies, ,] = useFetch("http://localhost:3001/files", []);
+  const [movies, setMovies, ,] = useFetch("https://kodilist.azure-api.net/submerge/File/List", []);
 
   async function handleDeleteMovie(movieId) {
     try {

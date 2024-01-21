@@ -43,7 +43,7 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = tr
     event.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:3001/files/${movieSubtitle.documentId}/records/${movieSubtitle.id}/bookmark`, {
+      const response = await fetch(`https://kodilist.azure-api.net/submerge/File/${movieSubtitle.documentId}/Record/${movieSubtitle.id}/Bookmark`, {
         method: isBookmarked ? "DELETE" : "POST",
       });
       if (response.status === 200) {
