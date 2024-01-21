@@ -12,11 +12,20 @@ import { SiOpenai } from "react-icons/si";
 import Spinner from "react-bootstrap/Spinner";
 
 const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = true }) => {
-  const { whiteBoardSubtitles, setWhiteBoardSubtitles, showOne, setShowOne, changeText, setChangeText } = useContext(ApplicationContext);
+  const { whiteBoardSubtitles, setWhiteBoardSubtitles, showOnlyFirst, showSingle } = useContext(ApplicationContext);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isWhiteBoard, setIsWhiteBoard] = useState(false);
   const [chatGptReply, setChatGptReply] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const [showSingleLocal, setShowSingleLocal] = useState(false);
+  const [showFirstLocal, setShowFirstLocal] = useState(false);
+
+  useEffect(() => {
+    console.log("showSingle", showSingle);
+    setShowSingleLocal(showSingle);
+    setShowFirstLocal(showOnlyFirst);
+  }, [showSingle, showOnlyFirst]);
 
   useEffect(() => {
     setIsBookmarked(movieSubtitle.bookmarked);
@@ -179,8 +188,8 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = tr
       </div>
       <Card className="subtitle-card" onMouseUp={handleMouseUp}>
         <Card.Body className="subtitle-card-body">
-          {showOne ? (
-            changeText ? (
+          {showSingleLocal ? (
+            showFirstLocal ? (
               <>
                 <div>{movieSubtitle.text1}</div>
                 <hr />
@@ -231,10 +240,10 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = tr
         <div
           onClick={(e) => {
             e.preventDefault();
-            setShowOne(false);
+            setShowSingleLocal(false);
           }}
         >
-          <OverlayTrigger placement="right" overlay={generateTooltipElement("See Both")}>
+          <OverlayTrigger placement="right" overlay={generateTooltipElement("See both for all subtitles")}>
             <a href="#">
               <HiOutlineEmojiHappy size={25} color="#10a37f" />
             </a>
@@ -243,11 +252,11 @@ const MovieSubtitleCard = ({ movieSubtitle, removeSubtitle, isDeleteEnabled = tr
         <div
           onClick={(e) => {
             e.preventDefault();
-            setShowOne(true);
-            setChangeText(!changeText);
+            setShowSingleLocal(true);
+            setShowFirstLocal(!showFirstLocal);
           }}
         >
-          <OverlayTrigger placement="right" overlay={generateTooltipElement("See One")}>
+          <OverlayTrigger placement="right" overlay={generateTooltipElement("See one for all subtitles")}>
             <a href="#">
               <FaRegFaceSmileWink size={21} color="#10a37f" />
             </a>

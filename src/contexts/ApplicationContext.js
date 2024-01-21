@@ -4,16 +4,16 @@ export const ApplicationContext = createContext();
 
 function ApplicationProvider({ children }) {
   const [whiteBoardSubtitles, setWhiteBoardSubtitles] = useState([]);
-  const [showOne, setShowOne] = useState(false);
-  const [changeText, setChangeText] = useState(false);
+  const [showSingle, setShowSingle] = useState(false);
+  const [showOnlyFirst, setShowOnlyFirst] = useState(false);
 
   const sharedState = {
     whiteBoardSubtitles,
     setWhiteBoardSubtitles,
-    showOne,
-    setShowOne,
-    changeText,
-    setChangeText,
+    showSingle,
+    setShowSingle,
+    showOnlyFirst,
+    setShowOnlyFirst,
   };
   return <ApplicationContext.Provider value={sharedState}>{children}</ApplicationContext.Provider>;
 }

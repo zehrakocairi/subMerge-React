@@ -4,9 +4,13 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { useParams, useLocation } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Card from "react-bootstrap/Card";
 import { SiOpenai } from "react-icons/si";
+import Button from "react-bootstrap/Button";
+import { OverlayTrigger } from "react-bootstrap";
+import { Tooltip } from "react-bootstrap";
+import { ApplicationContext } from "../../contexts/ApplicationContext";
 
 const MovieSubtitle = () => {
   const { movieId } = useParams();
@@ -14,6 +18,7 @@ const MovieSubtitle = () => {
   const name = searchParams.get("movieName");
   const [movieSubtitles, , ,] = useFetch(`https://kodilist.azure-api.net/submerge/File/${movieId}/Record`, []);
   let [filteredData, setFilteredData] = useState([]);
+  const { showOnlyFirst, setShowOnlyFirst, showSingle, setShowSingle } = useContext(ApplicationContext);
 
   useEffect(() => {
     if (movieSubtitles) GetFilteredData();
@@ -41,6 +46,23 @@ const MovieSubtitle = () => {
       console.log(error);
     }
   }
+  const generateTooltipElement = (text) => (
+    <Tooltip id="tooltip">
+      <strong>{text}</strong>
+    </Tooltip>
+  );
+
+  const toggleVisibility = () => {
+    if (showSingle && showOnlyFirst) {
+      setShowOnlyFirst(false);
+    } else if (!showSingle) {
+      setShowSingle(true);
+      setShowOnlyFirst(true);
+    } else {
+      setShowSingle(false);
+      setShowOnlyFirst(true);
+    }
+  };
 
   return (
     <>
@@ -70,6 +92,13 @@ const MovieSubtitle = () => {
               onChange={(e) => GetFilteredData(e.target.value)}
             />
           </InputGroup>
+        </div>
+        <div className="toggleButton">
+          <OverlayTrigger placement="left" overlay={generateTooltipElement("choose a study way")}>
+            <Button variant="outline-warning" onClick={toggleVisibility}>
+              Toggle
+            </Button>
+          </OverlayTrigger>
         </div>
         {filteredData.map((movieSubtitle) => {
           return <MovieSubtitleCard key={movieSubtitle.id} movieSubtitle={movieSubtitle} removeSubtitle={removeSubtitle} />;

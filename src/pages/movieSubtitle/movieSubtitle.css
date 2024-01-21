@@ -47,3 +47,7 @@
 .card-text {
   font-size: 0.9rem;
 }
+.toggleButton {
+  display: flex;
+  justify-content: flex-end;
+}
